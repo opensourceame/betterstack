@@ -24,5 +24,9 @@
 		</div>
 	</div>
 
-	<button id='new_user_submit_btn' type="submit" class="btn btn-primary">Create new row</button>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-8">
+	        <button id='new_user_submit_btn' type="submit" class="btn btn-primary">Create new row</button>
+        </div>
 </form>

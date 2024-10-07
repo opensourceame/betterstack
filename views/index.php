@@ -5,39 +5,13 @@
 
 <p>
 
-<table id='users_table' class="table table-striped">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>E-mail</th>
-			<th>City</th>
-			<th>Phone number</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php foreach ($users as $index => $user) { ?>
-		<tr>
-			<td><?= $user->getName() ?></td>
-			<td><?= $user->getEmail() ?></td>
-			<td><?= $user->getCity() ?></td>
-			<td><?= $user->getPhoneNumber() ?></td>
-		</tr>
-		<?php } ?>
-	</tbody>
-</table>
+<div id='users_container'>
+	<?php $app->renderPartial('users', ['users' => $users]) ?>
+</div>
 
-<?php if ($pageErrors) { ?>
-	<div class='alert alert-warning'>
-		<p>Could not add record:</p>
-		<ul>
-			<?php foreach($pageErrors as $field => $error) { ?>
-			<li><?= $field ?> - <?= $error ?></li>
-			<?php } ?>
-		</ul>
-	</div>
-<?php } ?>
+<div id='errors_container'></div>
 
-<form method="post" action="index.php" class="form-horizontal">
+<form id="new_user_form" method="post" action="" class="form-horizontal">
 	<div class="form-group">
 		<label for="name" class="col-sm-4 control-label">Name:</label>
 		<div class="col-sm-8">
@@ -63,14 +37,35 @@
 		</div>
 	</div>
 
-	<button type="submit" class="btn btn-primary">Create new row</button>
+	<button id='new_user_submit_btn' type="submit" class="btn btn-primary">Create new row</button>
 </form>
 
 <script type='text/javascript'>
-	$.extend( $.fn.dataTable.defaults, {
-    	searching: true,
-    	ordering:  true
-	} );
+	function submitForm() {
+		let form = $("#new_user_form");
 
-	let table = new DataTable('#users_table');
+		$('#errors_container')[0].innerHTML = '';
+
+		$.ajax({
+                    type: "POST",
+                    url: '/create',
+                    data: form.serialize(), // Serialize form data
+                    success: function (data) {
+						$('#users_container')[0].innerHTML = data;
+						$("#new_user_form")[0].reset()
+                    },
+                    error: function (data) {
+						console.log(data);
+						$('#errors_container')[0].innerHTML = data.responseText;
+                    }
+                });
+	}
+
+	$(document).ready(function() {
+		$('#new_user_submit_btn').click(function(event) {
+			event.preventDefault();
+
+			submitForm();
+		});
+	});
 </script>

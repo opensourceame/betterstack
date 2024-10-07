@@ -14,6 +14,10 @@ class User extends BaseModel{
 
 	// Create getter functions
 
+	public function getId() {
+		return $this->getField('id');
+	}
+
 	public function getName() {
 		return $this->getField('name');
 	}

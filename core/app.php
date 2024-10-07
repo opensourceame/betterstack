@@ -5,6 +5,9 @@ require dirname(__FILE__).'/base_model.php';
 foreach (glob(dirname(__FILE__).'/../models/*.php') as $filename){
 	require $filename;
 }
+foreach (glob(dirname(__FILE__).'/../controllers/*.php') as $filename){
+	require $filename;
+}
 
 /**
  * App
@@ -41,6 +44,8 @@ class App {
 			$$key = $value;
 		}
 
+		$app = $this;
+
 		// Start capturing of output
 		ob_start();
 		include './views/'.$viewfile.'.php';
@@ -50,6 +55,17 @@ class App {
 		ob_end_clean();
 		// Render $content in layout
 		include './views/layout.php';
+	}
+
+	public function renderPartial($viewfile, $vars = array()) {
+		// Render array to usable variables
+		foreach ($vars as $key => $value) {
+			$$key = $value;
+		}
+
+		$app = $this;
+
+		include './views/'.$viewfile.'.php';
 	}
 
 }

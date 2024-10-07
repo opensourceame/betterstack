@@ -20,14 +20,3 @@
 		<?php } ?>
 	</tbody>
 </table>
-
-<script type='text/javascript'>
-    $.extend( $.fn.dataTable.defaults, {
-    	searching: true,
-    	ordering:  true
-	} );
-
-	function updateTable() {
-		let table = new DataTable('#new_user_form');
-	}
-</script>

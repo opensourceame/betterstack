@@ -14,6 +14,15 @@
 <?php include('form.php'); ?>
 
 <script type='text/javascript'>
+	 $.extend( $.fn.dataTable.defaults, {
+		searching: true,
+		ordering:  true
+	} );
+
+	function updateTable() {
+		let table = new DataTable('#users_table');
+	}
+
 	function submitForm() {
 		let form = $("#new_user_form");
 
@@ -25,7 +34,8 @@
                     data: form.serialize(), // Serialize form data
                     success: function (data) {
 						$('#users_container')[0].innerHTML = data;
-						$("#new_user_form")[0].reset()
+						$("#new_user_form")[0].reset();
+						updateTable();
                     },
                     error: function (data) {
 						console.log(data);
@@ -35,6 +45,8 @@
 	}
 
 	$(document).ready(function() {
+		updateTable();
+
 		$('#new_user_submit_btn').click(function(event) {
 			event.preventDefault();
 

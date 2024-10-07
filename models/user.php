@@ -42,6 +42,10 @@ class User extends BaseModel{
 			$this->errors['phone_number'] = 'too short';
 		}
 
+		if (strlen($this->getField('phone_number')) > 20) {
+			$this->errors['phone_number'] = 'too long';
+		}
+
 		return false;
 	}
 

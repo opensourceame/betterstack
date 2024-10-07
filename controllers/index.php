@@ -9,9 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Insert it to database with POST data
     $result = $user->insert(array(
-        'name'  	   => $_POST['name'],
-        'email' 	   => $_POST['email'],
-        'city'  	   => $_POST['city'],
+        'name'         => $_POST['name'],
+        'email'        => $_POST['email'],
+        'city'         => $_POST['city'],
         'phone_number' => $_POST['phone_number']
     ));
 

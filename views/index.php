@@ -26,7 +26,6 @@
 	</tbody>
 </table>
 
-<?= $pageErrors ?>
 <?php if ($pageErrors) { ?>
 	<div class='alert alert-warning'>
 		<p>Could not add record:</p>

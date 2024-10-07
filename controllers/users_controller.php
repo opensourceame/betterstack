@@ -28,13 +28,11 @@ class UsersController extends BaseController {
 
         if ($result === false) {
             $pageErrors = $user->errors();
-            $params     = $_POST;
 
             http_response_code(400);
 
             $this->app->renderPartial('errors', array(
                 'params'     => $this->params,
-                // 'users'      => $users,
                 'pageErrors' => $pageErrors,
             ));
         } else {
@@ -44,7 +42,5 @@ class UsersController extends BaseController {
                 'users'      => $users,
             ));
         }
-
-
     }
 }

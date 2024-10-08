@@ -20,10 +20,11 @@
 * add unit testing example
 * validate email address
 * fix horizontal form
+* create router
+* create controller classes
+* use AJAX for creating users
 
 ## TODO
-
-* router + ajax
 
 ## Observations
 
@@ -39,7 +40,7 @@
 
 ## Notes
 
-* I didn't do much extra styling as I don't think there's much that can be done to make a form and table appealing on the page.
+* I didn't do much extra styling as I don't think there's much that can be done to make the form and table appealing on the page.
   Ideally the form should be displayed by popping up a modal or unhiding the form when you click an "add" button.
 * I realised only towards the end that I hadn't implemented the form submission in an AJAX way.  That adds a fair amount of
   complexity which I didn't have time for.

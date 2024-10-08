@@ -5,32 +5,36 @@ require dirname(__FILE__).'/base_model.php';
 foreach (glob(dirname(__FILE__).'/../models/*.php') as $filename){
 	require $filename;
 }
+foreach (glob(dirname(__FILE__).'/../controllers/*.php') as $filename){
+	require $filename;
+}
 
 /**
  * App
  * provides interface for database manipulation, accessing config and rendering views
  */
 class App {
-	
+
 	private $directory;
+
 	public $db;
 	public $config;
-	
+
 	public function __construct(){
 		// Save current directory path
 		$this->directory = dirname(__FILE__);
-		
+
 		// Load configuration options
 		$this->config = require $this->directory.'/config.php';
-			
+
 		// Load database instance and tell it to connect with given config
 		$this->db = require $this->directory.'/database.php';
 		$this->db->connect($this->config->database);
-	}	
-	
+	}
+
 	/**
 	 * Renders given view with given set of variables
-	 * 
+	 *
 	 * param $viewfile: path of the view file relative to the views direcotry, without the ending .php
 	 * param $vars: array of variables to be accessed insede the views
 	 */
@@ -39,7 +43,9 @@ class App {
 		foreach ($vars as $key => $value) {
 			$$key = $value;
 		}
-		
+
+		$app = $this;
+
 		// Start capturing of output
 		ob_start();
 		include './views/'.$viewfile.'.php';
@@ -50,7 +56,18 @@ class App {
 		// Render $content in layout
 		include './views/layout.php';
 	}
-	
+
+	public function renderPartial($viewfile, $vars = array()) {
+		// Render array to usable variables
+		foreach ($vars as $key => $value) {
+			$$key = $value;
+		}
+
+		$app = $this;
+
+		include './views/'.$viewfile.'.php';
+	}
+
 }
 
 return new App();

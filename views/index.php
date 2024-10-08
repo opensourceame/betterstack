@@ -1,34 +1,56 @@
-<h1>PHP Test Application</h1>
+<link rel='stylesheet' href='https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css'/>
+<script type='text/javascript' src='https://cdn.datatables.net/2.1.8/js/dataTables.min.js'></script>
 
-<table>
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>E-mail</th>
-			<th>City</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?foreach($users as $user){?>
-		<tr>
-			<td><?=$user->getName()?></td>
-			<td><?=$user->getEmail()?></td>
-			<td><?=$user->getCity()?></td>
-		</tr>
-		<?}?>
-	</tbody>
-</table>				
+<h1 class="text-center">PHP Test Application</h1>
 
-<form method="post" action="create.php">
-	
-	<label for="name">Name:</label>
-	<input name="name" input="text" id="name"/>
-	
-	<label for="email">E-mail:</label>
-	<input name="email" input="text" id="email"/>
-	
-	<label for="city">City:</label>
-	<input name="city" input="text" id="city"/>
-	
-	<button>Create new row</button>
-</form>
+<p>
+
+<div id='users_container'>
+	<?php $app->renderPartial('users', ['users' => $users]) ?>
+</div>
+
+<div id='errors_container'></div>
+
+<?php include('form.php'); ?>
+
+<script type='text/javascript'>
+	 $.extend( $.fn.dataTable.defaults, {
+		searching: true,
+		ordering:  true
+	} );
+
+	function updateTable() {
+		let table = new DataTable('#users_table');
+	}
+
+	function submitForm() {
+		let form = $("#new_user_form");
+
+		$('#errors_container')[0].innerHTML = '';
+
+		$.ajax({
+                    type: "POST",
+                    url: '/index.php',
+                    data: form.serialize(), // Serialize form data
+                    success: function (data) {
+						$('#users_container')[0].innerHTML = data;
+						$("#new_user_form")[0].reset();
+						updateTable();
+                    },
+                    error: function (data) {
+						console.log(data);
+						$('#errors_container')[0].innerHTML = data.responseText;
+                    }
+                });
+	}
+
+	$(document).ready(function() {
+		updateTable();
+
+		$('#new_user_submit_btn').click(function(event) {
+			event.preventDefault();
+
+			submitForm();
+		});
+	});
+</script>

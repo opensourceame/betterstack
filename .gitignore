@@ -1,3 +1,5 @@
+.env.*
 .settings
 .project
 /config/database.php
+/tmp
